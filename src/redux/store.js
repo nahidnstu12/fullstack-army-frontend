@@ -1,12 +1,8 @@
-import { createStore, action, computed } from 'easy-peasy';
+import { configureStore } from '@reduxjs/toolkit'
+import CounterSlice from './features/CounterSlice'
 
-export const store = createStore({
-    todos: [{ id: 1, text: 'Learn easy peasy', done: true }],
-    completedTodos: computed((state) => state.todos.filter((todo) => todo.done)),
-
-  addTodo: action((state, payload) => {
-    state.todos.push({ text: payload, done: false });
-  }),
-});
-
-// export default store
+export const store = configureStore({
+  reducer: {
+    counter: CounterSlice
+  },
+})
