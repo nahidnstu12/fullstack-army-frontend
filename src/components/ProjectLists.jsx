@@ -23,6 +23,8 @@ export default function ProjectLists() {
         <Accordion
           expanded={expanded === "panel" + item.id}
           onChange={handleChange("panel" + item.id)}
+          key={item.id}
+
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -53,7 +55,7 @@ export default function ProjectLists() {
             <Box className="my-5">
               {
                 item?.subtasks?.map((subtask) => (
-                  <Box className="flex justify-between gap-4 my-2" key={item.id}>
+                  <Box className="flex justify-between gap-4 my-2" key={subtask.id}>
                     <Typography sx={{ width: "33%", flexShrink: 0 }}>
                       {subtask.title}
                     </Typography>

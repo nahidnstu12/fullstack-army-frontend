@@ -8,6 +8,7 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
+import {  Controller } from "react-hook-form";
 
 export const MUIInput = (props) => {
   return (
@@ -41,11 +42,7 @@ export const MUISelect = ({
   defaultValue,
   name,
 }) => {
-  // const [age, setAge] = React.useState('');
 
-  // const handleChange = (event) => {
-  //   setAge(event.target.value);
-  // };
   return (
     <FormControl sx={{ minWidth: 120 }} size="small">
       <InputLabel id="demo-select-small">{label}</InputLabel>
@@ -70,5 +67,66 @@ export const MUISelect = ({
         ))}
       </Select>
     </FormControl>
+  );
+};
+
+
+
+export const FormInputDropdown = ({
+  name,
+  control,
+  label,
+  options
+}) => {
+  const generateSingleOptions = () => {
+    return options.map((option) => {
+      return (
+        <MenuItem key={option.id} value={option.id ?? " "}>
+          {option.name}
+        </MenuItem>
+      );
+    });
+  };
+
+  return (
+    <FormControl size={"small"} sx={{ minWidth: 120 }}>
+      <InputLabel id="demo-select-small">{label}</InputLabel>
+      <Controller
+        render={({ field: { onChange, value } }) => (
+          <Select onChange={onChange} value={value ?? ""} labelId="demo-select-small"
+          id="demo-select-small">
+            {generateSingleOptions()}
+          </Select>
+        )}
+        control={control}
+        name={name}
+      />
+    </FormControl>
+  );
+};
+
+export const FormInputText = ({ name, control, label, type="text" }) => {
+  return (
+    <Controller
+      name={name}
+      control={control}
+      render={({
+        field: { onChange, value },
+        fieldState: { error },
+        formState,
+      }) => (
+        <TextField
+          helperText={error ? error.message : null}
+          size="small"
+          error={!!error}
+          onChange={onChange}
+          value={value}
+          fullWidth
+          label={label}
+          variant="outlined"
+          type={type}
+        />
+      )}
+    />
   );
 };
