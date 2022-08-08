@@ -28,10 +28,12 @@ export default function ProjectLists() {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
+            
           >
             <Typography sx={{ width: "33%", flexShrink: 0 }}>
               {item.title}
             </Typography>
+            <Box className="flex">
             <Typography sx={{ color: "text.secondary", margin: "0 4px" }}>
               <Chip label={"Nahid"} color="primary" />
             </Typography>
@@ -41,15 +43,40 @@ export default function ProjectLists() {
             <Typography sx={{ color: "text.secondary", margin: "0 4px" }}>
               <Chip label={item.date} color="secondary" />
             </Typography>
+            </Box>
           </AccordionSummary>
           <AccordionDetails>
-            <Box sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-              <SubTaskForm />
+            {/* sub task form */}
+
+            <SubTaskForm />
+
+            <Box className="my-5">
+              {
+                item?.subtasks?.map((subtask) => (
+                  <Box className="flex justify-between gap-4 my-2" key={item.id}>
+                    <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                      {subtask.title}
+                    </Typography>
+                    <Box className="flex">
+                    <Typography
+                      sx={{ color: "text.secondary", margin: "0 4px" }}
+                    >
+                      <Chip label={"Nahid"} color="primary" />
+                    </Typography>
+                    <Typography
+                      sx={{ color: "text.secondary", margin: "0 4px" }}
+                    >
+                      <Chip label={subtask.status} color="warning" />
+                    </Typography>
+                    <Typography
+                      sx={{ color: "text.secondary", margin: "0 4px" }}
+                    >
+                      <Chip label={subtask.date} color="secondary" />
+                    </Typography>
+                    </Box>
+                  </Box>
+                ))}
             </Box>
-            <Typography>
-              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
-              feugiat. Aliquam eget maximus est, id dignissim quam.
-            </Typography>
           </AccordionDetails>
         </Accordion>
       ))}
