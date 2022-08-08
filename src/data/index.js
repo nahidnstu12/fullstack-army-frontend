@@ -60,3 +60,10 @@ export const users = [
     {id:2, name: "Asif"},
     {id:3, name: "Rubel"},
 ]
+
+export const priority = [
+  {id: 1, name: "Low"},
+  {id: 2, name: "Medium"},
+  {id: 3, name: "High"},
+  
+]
