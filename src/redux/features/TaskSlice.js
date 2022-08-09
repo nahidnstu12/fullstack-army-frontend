@@ -5,7 +5,7 @@ export const taskSlice = createSlice({
   initialState: {
     taskList: [
       {
-        id: shortid.generate(),
+        id: 1,
         task_title: "task1",
         task_user: 1,
         task_priority: 1,

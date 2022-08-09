@@ -10,19 +10,36 @@ import {
   MUIInput,
   MUISelect,
 } from "./InputForm";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTask } from "../redux/features/TaskSlice";
+import { addUser } from "../redux/features/UserSlice";
+import shortid from "shortid";
+import { addSubtask } from "../redux/features/SubtaskSlice";
 
-const defaultValues = {
+const defaultValuesOfTasks = {
   task_title: "",
   task_user: "",
   task_priority: "",
   task_date: "",
 };
+const defaultValuesOfSubtasks = {
+  subtask_title: "",
+  subtask_user: "",
+  subtask_priority: "",
+  subtask_date: "",
+};
+const defaultValuesOfUser = {
+  username: ""
+}
+
+const defaultValuesOfProject = {
+  project_title: "",
+  project_description: ""
+}
 
 export const ProjectForm =  () => {
   const dispatch = useDispatch();
-  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValues);
+  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValuesOfProject);
   const onSubmit = (data) => {
     console.log(data)
     dispatch(addTask(data))
@@ -61,10 +78,14 @@ export const ProjectForm =  () => {
 
 export const UserForm=()=> {
   const dispatch = useDispatch();
-  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValues);
+  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValuesOfUser);
   const onSubmit = (data) => {
-    console.log(data)
-    dispatch(addTask(data))
+    const newUser = {
+      id: shortid.generate(),
+      ...data
+    }
+    console.log(newUser)
+    dispatch(addUser(newUser))
     
   }
  
@@ -96,17 +117,18 @@ export const UserForm=()=> {
 
 
 export default function TaskForm() {
+  const {userlists} = useSelector(state => state.users)
   const dispatch = useDispatch();
-  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValues);
+  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValuesOfTasks);
   const onSubmit = (data) => {
-    console.log(data)
+    console.log({task:data})
     dispatch(addTask(data))
     
   }
  
 
   return (
-    <Box sx={{ display: "flex", gap: "10px", flexDirection: "column" }}>
+    <Box>
       <Typography variant="h5" align="center" color={"primary"}>
         ADD TASK FORM
       </Typography>
@@ -119,15 +141,17 @@ export default function TaskForm() {
         />
         <FormInputDropdown
           label={"Assigne Person"}
-          options={users}
+          options={userlists}
           name={"task_user"}
           control={control}
+          optionValue={"username"}
         />
         <FormInputDropdown
           label={"Assigne Priority"}
           options={priority}
           control={control}
           name={"task_priority"}
+          optionValue={"name"}
         />
 
         <FormInputText type="date" name={"task_date"} control={control}/>
@@ -145,18 +169,55 @@ export default function TaskForm() {
 }
 
 export const SubTaskForm = () => {
+  const {userlists} = useSelector(state => state.users)
+  const dispatch = useDispatch();
+  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValuesOfSubtasks);
+
+  const onSubmit = (data) => {
+    const newSubtask = {
+      id: shortid.generate(),
+      task_id : 1,
+      ...data
+    }
+    console.log({subtask:data})
+    dispatch(addSubtask(newSubtask))
+    
+  }
   return (
-    <Box sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-      <MUIInput label={"Sub Task Title"} />
-      <MUISelect label={"Assigne Person"} options={users} />
-      <MUISelect label={"Assigne Priority"} options={priority} />
-      <MUIDateInput label={"Assignr Date"} />
-      <MUIButton
-        variant="outlined"
-        color="success"
-        sx={{ width: "20%", alignSelf: "center" }}
-        label={"Add"}
-      />
+    <Box className=" mx-auto" >
+     <form onSubmit={handleSubmit(onSubmit)} className={"flex flex-wrap gap-3"}>
+        <FormInputText
+          label={"Sub Task Title"}
+          name={"subtask_title"}
+          control={control}
+        />
+        <FormInputDropdown
+          label={"Assigne Person"}
+          options={userlists}
+          name={"subtask_user"}
+          control={control}
+          optionValue={"username"}
+          sx={{ width: "200px"}}
+        />
+        <FormInputDropdown
+          label={"Assigne Priority"}
+          options={priority}
+          control={control}
+          name={"subtask_priority"}
+          optionValue={"name"}
+          sx={{ width: "200px"}}
+        />
+
+        <FormInputText type="date" name={"subtask_date"} control={control}/>
+       
+        <MUIButton
+          variant="outlined"
+          color="success"
+          sx={{ width: "20%" }}
+          label={"Add"}
+          type="submit"
+        />
+      </form>
     </Box>
   );
 };

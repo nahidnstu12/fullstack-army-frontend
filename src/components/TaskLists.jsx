@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function TaskLists() {
   const [expanded, setExpanded] = React.useState(false);
   const {taskList} = useSelector(state => state.tasks)
+  const {subtaskList} = useSelector(state => state.subtasks)
+  const {userlists} = useSelector(state => state.users)
 
   console.log(taskList)
 
@@ -19,8 +21,13 @@ export default function TaskLists() {
     console.log(event.target);
     setExpanded(isExpanded ? panel : false);
   };
-  // const lists = projectlists[0].tasks;
-  // console.log(lists);
+
+  subtaskList.filter(item => item.task_id === 1).map(i => console.log(i.subtask_title))
+
+  const assignUser = (id) => {
+    return userlists.find(user => user.id === id).username
+  } 
+  // console.log(assignUser(1));
   return (
     <div>
       {taskList.map((item) => (
@@ -39,10 +46,10 @@ export default function TaskLists() {
             </Typography>
             <Box className="flex">
             <Typography sx={{ color: "text.secondary", margin: "0 4px" }}>
-              <Chip label={item.task_user} color="primary" />
+              <Chip className="capitalize" label={assignUser(item.task_user)} color="primary" />
             </Typography>
             <Typography sx={{ color: "text.secondary", margin: "0 4px" }}>
-              <Chip label={priority[item.task_priority].name} color="warning" />
+              <Chip label={priority[item.task_priority-1].name} color="warning" />
             </Typography>
             <Typography sx={{ color: "text.secondary", margin: "0 4px" }}>
               <Chip label={item.task_date} color="secondary" />
@@ -59,18 +66,18 @@ export default function TaskLists() {
                 item?.subtasks?.map((subtask) => (
                   <Box className="flex justify-between gap-4 my-2" key={item.id}>
                     <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                      {subtask.title}
+                      {subtask.subtask_title}
                     </Typography>
                     <Box className="flex">
                     <Typography
                       sx={{ color: "text.secondary", margin: "0 4px" }}
                     >
-                      <Chip label={"Nahid"} color="primary" />
+                      <Chip className="capitalize" label={"Nahid"} color="primary" />
                     </Typography>
                     <Typography
                       sx={{ color: "text.secondary", margin: "0 4px" }}
                     >
-                      <Chip label={subtask.status} color="warning" />
+                      <Chip label={priority[subtask.subtask_priority].name} color="warning" />
                     </Typography>
                     <Typography
                       sx={{ color: "text.secondary", margin: "0 4px" }}

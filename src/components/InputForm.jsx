@@ -74,12 +74,12 @@ export const MUISelect = ({
   );
 };
 
-export const FormInputDropdown = ({ name, control, label, options }) => {
+export const FormInputDropdown = ({ name, control, label, options, optionValue, ...props }) => {
   const generateSingleOptions = () => {
     return options.map((option) => {
       return (
-        <MenuItem key={option.id} value={option.id}>
-          {option.name}
+        <MenuItem key={option.id} value={option.id} {...props}>
+          {option[optionValue]}
         </MenuItem>
       );
     });
@@ -90,7 +90,7 @@ export const FormInputDropdown = ({ name, control, label, options }) => {
       <InputLabel>{label}</InputLabel>
       <Controller
         render={({ field: { onChange, value } }) => (
-          <Select onChange={onChange} value={value}>
+          <Select onChange={onChange} value={value} {...props} >
             {generateSingleOptions()}
           </Select>
         )}
@@ -101,7 +101,7 @@ export const FormInputDropdown = ({ name, control, label, options }) => {
   );
 };
 
-export const FormInputText = ({ name, control, label, type = "text" }) => {
+export const FormInputText = ({ name, control, label, type = "text", ...props }) => {
   return (
     <Controller
       name={name}
@@ -117,10 +117,10 @@ export const FormInputText = ({ name, control, label, type = "text" }) => {
           error={!!error}
           onChange={onChange}
           value={value}
-          fullWidth
           label={label}
           variant="outlined"
           type={type}
+          {...props}
         />
       )}
     />
