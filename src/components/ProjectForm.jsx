@@ -1,58 +1,141 @@
 import { Box, Typography } from "@mui/material";
 import React, { useReducer } from "react";
 import { priority, users } from "../data";
-import { MUIButton, MUIDateInput, MUIInput, MUISelect } from "./InputForm";
+import {useForm} from 'react-hook-form';
+import {
+  FormInputDropdown,
+  FormInputText,
+  MUIButton,
+  MUIDateInput,
+  MUIInput,
+  MUISelect,
+} from "./InputForm";
+import { useDispatch } from 'react-redux';
+import { addTask } from "../redux/features/TaskSlice";
+
+const defaultValues = {
+  task_title: "",
+  task_user: "",
+  task_priority: "",
+  task_date: "",
+};
+
+export const ProjectForm =  () => {
+  const dispatch = useDispatch();
+  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValues);
+  const onSubmit = (data) => {
+    console.log(data)
+    dispatch(addTask(data))
+    
+  }
+ 
+  return (
+    <Box sx={{ display: "flex", gap: "10px", flexDirection: "column" }}>
+      <Typography variant="h5" align="center" color={"primary"}>
+        New PROJECT FORM
+      </Typography>
+      <form onSubmit={handleSubmit(onSubmit)} className={"flex flex-col gap-3"}>
+        <FormInputText
+          label={"Project Title"}
+          fullWidth
+          name={"project_title"}
+          control={control}
+        />
+       <FormInputText
+          label={"Project Description"}
+          fullWidth
+          name={"project_description"}
+          control={control}
+        />
+        <MUIButton
+          variant="outlined"
+          color="success"
+          sx={{ width: "30%" }}
+          label={"Add New Project"}
+          type="submit"
+        />
+      </form>
+    </Box>
+  );
+}
+
+export const UserForm=()=> {
+  const dispatch = useDispatch();
+  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValues);
+  const onSubmit = (data) => {
+    console.log(data)
+    dispatch(addTask(data))
+    
+  }
+ 
+
+  return (
+    <Box sx={{ display: "flex", gap: "10px", flexDirection: "column" }}>
+      <Typography variant="h5" align="center" color={"primary"}>
+        ADD NEW USER FORM
+      </Typography>
+      <form onSubmit={handleSubmit(onSubmit)} className={"flex flex-col gap-3"}>
+        <FormInputText
+          label={"User Name"}
+          fullWidth
+          name={"username"}
+          control={control}
+        />
+        
+        <MUIButton
+          variant="outlined"
+          color="success"
+          sx={{ width: "30%" }}
+          label={"Add New User"}
+          type="submit"
+        />
+      </form>
+    </Box>
+  );
+}
+
 
 export default function TaskForm() {
-  const [formInput, setFormInput] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      task_title: "",
-      task_user: "",
-      task_priority: "",
-      task_date: "",
-    }
-  );
-  const handleInput = (evt) => {
-    const name = evt.target.name;
-    const newValue = evt.target.value;
-    setFormInput({ [name]: newValue });
-  };
-  const handleSubmit = evt => {
-    evt.preventDefault();
+  const dispatch = useDispatch();
+  const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValues);
+  const onSubmit = (data) => {
+    console.log(data)
+    dispatch(addTask(data))
+    
+  }
+ 
 
-    let data = { formInput };
-
-    console.log({data});
-  };
   return (
     <Box sx={{ display: "flex", gap: "10px", flexDirection: "column" }}>
       <Typography variant="h5" align="center" color={"primary"}>
         ADD TASK FORM
       </Typography>
-      <form onSubmit={handleSubmit} className={"flex flex-col gap-3"}>
-        <MUIInput label={"Task Title"} fullWidth name={"task_title"} onChange={handleInput}/>
-        <MUISelect
+      <form onSubmit={handleSubmit(onSubmit)} className={"flex flex-col gap-3"}>
+        <FormInputText
+          label={"Task Title"}
+          fullWidth
+          name={"task_title"}
+          control={control}
+        />
+        <FormInputDropdown
           label={"Assigne Person"}
           options={users}
           name={"task_user"}
-          onChange={handleInput}
-          defaultValue={formInput.task_user || 1}
+          control={control}
         />
-        <MUISelect
+        <FormInputDropdown
           label={"Assigne Priority"}
           options={priority}
+          control={control}
           name={"task_priority"}
-          onChange={handleInput}
-          defaultValue={formInput.task_priority || 1}
-          optionValueProp={'id'}
-          optionTitleProp={['name']}
         />
-        <MUIInput type="date" name={"task_date"} onChange={handleInput}/>
+
+        <FormInputText type="date" name={"task_date"} control={control}/>
+       
         <MUIButton
           variant="outlined"
           color="success"
-          sx={{ width: "20%" }}
+          sx={{ width: "30%" }}
           label={"Add Task"}
           type="submit"
         />

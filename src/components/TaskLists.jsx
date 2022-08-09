@@ -4,12 +4,16 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { projectlists } from "../data";
+import { priority, projectlists } from "../data";
 import { Chip, Box } from "@mui/material";
 import { SubTaskForm } from "./ProjectForm";
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function ProjectLists() {
+export default function TaskLists() {
   const [expanded, setExpanded] = React.useState(false);
+  const {taskList} = useSelector(state => state.tasks)
+
+  console.log(taskList)
 
   const handleChange = (panel) => (event, isExpanded) => {
     console.log(event.target);
@@ -19,7 +23,7 @@ export default function ProjectLists() {
   // console.log(lists);
   return (
     <div>
-      {projectlists[0].tasks.map((item) => (
+      {taskList.map((item) => (
         <Accordion
           expanded={expanded === "panel" + item.id}
           onChange={handleChange("panel" + item.id)}
@@ -31,17 +35,17 @@ export default function ProjectLists() {
             
           >
             <Typography sx={{ width: "33%", flexShrink: 0 }}>
-              {item.title}
+              {item.task_title}
             </Typography>
             <Box className="flex">
             <Typography sx={{ color: "text.secondary", margin: "0 4px" }}>
-              <Chip label={"Nahid"} color="primary" />
+              <Chip label={item.task_user} color="primary" />
             </Typography>
             <Typography sx={{ color: "text.secondary", margin: "0 4px" }}>
-              <Chip label={item.status} color="warning" />
+              <Chip label={priority[item.task_priority].name} color="warning" />
             </Typography>
             <Typography sx={{ color: "text.secondary", margin: "0 4px" }}>
-              <Chip label={item.date} color="secondary" />
+              <Chip label={item.task_date} color="secondary" />
             </Typography>
             </Box>
           </AccordionSummary>
