@@ -1,13 +1,21 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import TaskForm from "../components/ProjectForm";
+import {TaskForm} from "../components/ProjectForm";
 import TaskLists from "../components/TaskManage";
 import {  useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getProjectTitle } from "../redux/features/ProjectSlice";
 
 export default function Project() {
   const {id: projectId} = useParams()
 
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(getProjectTitle(projectId))
+  }, [projectId])
+ 
+  const {selectedProjectTitle} = useSelector(state => state.projects)
   return (
     <div className="w-9/12 mx-auto">
       <Box className={"flex gap-4"}>
@@ -15,7 +23,7 @@ export default function Project() {
         <Link to={"/users"}>Users</Link>
         <Link to={"/projects"}>Project Lists</Link>
         {/* add project title */}
-        <Typography>{"Project Title"}</Typography> 
+        <Typography>{selectedProjectTitle}</Typography> 
       </Box>
       <Box className="p-8" >
         <TaskForm projectId={projectId}/>

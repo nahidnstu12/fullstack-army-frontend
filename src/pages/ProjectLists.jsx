@@ -16,6 +16,7 @@ import {  useSelector } from 'react-redux';
 export default function ProjectLists() {
   const {projectlists} = useSelector(state => state.projects)
   return (
+    
     <div className="mx-auto w-9/12">
       <Box className={"flex gap-4"}>
         <Link to={"/"}>Home</Link>

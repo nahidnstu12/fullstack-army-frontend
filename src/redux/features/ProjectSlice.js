@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { action } from "easy-peasy";
 import shortid from "shortid";
 export const projectSlice = createSlice({
   name: "project",
@@ -11,6 +12,7 @@ export const projectSlice = createSlice({
 
       },
     ],
+    selectedProjectTitle : ''
   },
   reducers: {
     addProject: (state, action) => {
@@ -20,8 +22,12 @@ export const projectSlice = createSlice({
       };
       state.projectlists.push(newProject);
     },
+    getProjectTitle: (state, action) => {
+      // console.log(state.projectlists.find(item => item.id == action.payload).project_title);
+      state.selectedProjectTitle = state.projectlists?.find(item => item.id == action.payload).project_title
+    }
   },
 });
 // Action creators are generated for each case reducer function
-export const { addProject } = projectSlice.actions;
+export const { addProject, getProjectTitle } = projectSlice.actions;
 export default projectSlice.reducer;

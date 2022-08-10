@@ -23,10 +23,6 @@ export default function TaskLists({projectId}) {
     setExpanded(isExpanded ? panel : false);
   };
 
-  // filter optimization check
-  // subtaskList.filter(item => item.task_id === 1).map(i => console.log(i.subtask_title))
-  // console.log(subtaskList.filter(item => item.task_id === 1))
-
   const assignUser = (id) => {
     return userlists.find(user => user.id === id).username
   } 

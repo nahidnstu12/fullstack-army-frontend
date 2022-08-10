@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { useReducer } from "react";
-import { priority, users } from "../data";
+import { priority } from "../data";
 import {useForm} from 'react-hook-form';
 import {
   FormInputDropdown,
@@ -39,13 +38,13 @@ export const ProjectForm =  () => {
   const dispatch = useDispatch();
   const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValuesOfProject);
   const onSubmit = (data) => {
-    const newProjecct ={
+    const newProject ={
       id: shortid.generate(),
       ...data
     }
     // console.log(data)
-    dispatch(addProject(newProjecct))
-    
+    dispatch(addProject(newProject))
+    reset(defaultValuesOfProject)
   }
  
   return (
@@ -86,9 +85,9 @@ export const UserForm=()=> {
       id: shortid.generate(),
       ...data
     }
-    console.log(newUser)
+    // console.log(newUser)
     dispatch(addUser(newUser))
-    
+    reset(defaultValuesOfUser)
   }
  
 
@@ -118,7 +117,7 @@ export const UserForm=()=> {
 }
 
 
-export default function TaskForm({projectId}) {
+export const TaskForm =({projectId})=> {
   const {userlists} = useSelector(state => state.users)
   const dispatch = useDispatch();
   const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValuesOfTasks);
@@ -129,7 +128,7 @@ export default function TaskForm({projectId}) {
     }
     // console.log({task:newTask})
     dispatch(addTask(newTask))
-    
+    reset(defaultValuesOfTasks)
   }
  
 
@@ -185,9 +184,9 @@ export const SubTaskForm = ({taskId}) => {
       task_id : taskId,
       ...data
     }
-    console.log({subtask:data})
+    // console.log({subtask:data})
     dispatch(addSubtask(newSubtask))
-    
+    reset(defaultValuesOfSubtasks)
   }
   return (
     <Box className=" mx-auto" >

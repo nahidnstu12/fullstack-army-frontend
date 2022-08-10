@@ -85,6 +85,7 @@ export const FormInputDropdown = ({ name, control, label, options, optionValue, 
     <FormControl size={"small"}>
       <InputLabel>{label}</InputLabel>
       <Controller
+      // 
         render={({ field: { onChange, value } }) => (
           <Select onChange={onChange} value={value} {...props} >
             {generateSingleOptions()}
@@ -92,6 +93,7 @@ export const FormInputDropdown = ({ name, control, label, options, optionValue, 
         )}
         control={control}
         name={name}
+        // rules={{ required: true }}
       />
     </FormControl>
   );
@@ -102,6 +104,7 @@ export const FormInputText = ({ name, control, label, type = "text", ...props })
     <Controller
       name={name}
       control={control}
+      rules={{ required: true }}
       render={({
         field: { onChange, value },
         fieldState: { error },
