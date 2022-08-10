@@ -6,15 +6,13 @@ import {
   FormInputDropdown,
   FormInputText,
   MUIButton,
-  MUIDateInput,
-  MUIInput,
-  MUISelect,
 } from "./InputForm";
 import { useDispatch, useSelector } from 'react-redux';
 import { addTask } from "../redux/features/TaskSlice";
 import { addUser } from "../redux/features/UserSlice";
 import shortid from "shortid";
 import { addSubtask } from "../redux/features/SubtaskSlice";
+import { addProject } from "../redux/features/ProjectSlice";
 
 const defaultValuesOfTasks = {
   task_title: "",
@@ -41,8 +39,12 @@ export const ProjectForm =  () => {
   const dispatch = useDispatch();
   const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValuesOfProject);
   const onSubmit = (data) => {
-    console.log(data)
-    dispatch(addTask(data))
+    const newProjecct ={
+      id: shortid.generate(),
+      ...data
+    }
+    // console.log(data)
+    dispatch(addProject(newProjecct))
     
   }
  
@@ -116,13 +118,17 @@ export const UserForm=()=> {
 }
 
 
-export default function TaskForm() {
+export default function TaskForm({projectId}) {
   const {userlists} = useSelector(state => state.users)
   const dispatch = useDispatch();
   const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValuesOfTasks);
   const onSubmit = (data) => {
-    console.log({task:data})
-    dispatch(addTask(data))
+    const newTask = {
+      project_id: projectId,
+      ...data
+    }
+    // console.log({task:newTask})
+    dispatch(addTask(newTask))
     
   }
  
@@ -150,7 +156,6 @@ export default function TaskForm() {
           label={"Assigne Priority"}
           control={control}
           options={priority}
-          control={control}
           name={"task_priority"}
           optionValue={"name"}
         />
@@ -169,7 +174,7 @@ export default function TaskForm() {
   );
 }
 
-export const SubTaskForm = () => {
+export const SubTaskForm = ({taskId}) => {
   const {userlists} = useSelector(state => state.users)
   const dispatch = useDispatch();
   const { handleSubmit, reset, control, setValue, watch } =useForm(defaultValuesOfSubtasks);
@@ -177,7 +182,7 @@ export const SubTaskForm = () => {
   const onSubmit = (data) => {
     const newSubtask = {
       id: shortid.generate(),
-      task_id : 1,
+      task_id : taskId,
       ...data
     }
     console.log({subtask:data})

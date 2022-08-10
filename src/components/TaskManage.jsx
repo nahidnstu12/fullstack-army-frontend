@@ -4,33 +4,36 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { priority, projectlists } from "../data";
+import { priority } from "../data";
 import { Chip, Box } from "@mui/material";
 import { SubTaskForm } from "./ProjectForm";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-export default function TaskLists() {
+export default function TaskLists({projectId}) {
+  
   const [expanded, setExpanded] = React.useState(false);
   const {taskList} = useSelector(state => state.tasks)
   const {subtaskList} = useSelector(state => state.subtasks)
   const {userlists} = useSelector(state => state.users)
 
-  console.log(taskList)
+  console.log({taskList, subtaskList, projectId})
 
   const handleChange = (panel) => (event, isExpanded) => {
     console.log(event.target);
     setExpanded(isExpanded ? panel : false);
   };
 
-  subtaskList.filter(item => item.task_id === 1).map(i => console.log(i.subtask_title))
+  // filter optimization check
+  // subtaskList.filter(item => item.task_id === 1).map(i => console.log(i.subtask_title))
+  // console.log(subtaskList.filter(item => item.task_id === 1))
 
   const assignUser = (id) => {
     return userlists.find(user => user.id === id).username
   } 
   // console.log(assignUser(1));
   return (
-    <div>
-      {taskList.map((item) => (
+    <div className="mb-10">
+      {taskList.filter(i => i.project_id == projectId ).map((item) => (
         <Accordion
           expanded={expanded === "panel" + item.id}
           onChange={handleChange("panel" + item.id)}
@@ -61,11 +64,11 @@ export default function TaskLists() {
           <AccordionDetails>
             {/* sub task form */}
 
-            <SubTaskForm />
+            <SubTaskForm taskId={item.id}/>
 
             <Box className="my-5">
               {
-                item?.subtasks?.map((subtask) => (
+                subtaskList.filter(it => it.task_id === item.id).map((subtask) => (
                   <Box className="flex justify-between gap-4 my-2" key={subtask.id}>
                     <Typography sx={{ width: "33%", flexShrink: 0 }}>
                       {subtask.subtask_title}
@@ -74,7 +77,7 @@ export default function TaskLists() {
                     <Typography
                       sx={{ color: "text.secondary", margin: "0 4px" }}
                     >
-                      <Chip className="capitalize" label={"Nahid"} color="primary" />
+                      <Chip className="capitalize" label={assignUser(subtask.subtask_user)} color="primary" />
                     </Typography>
                     <Typography
                       sx={{ color: "text.secondary", margin: "0 4px" }}
@@ -84,7 +87,7 @@ export default function TaskLists() {
                     <Typography
                       sx={{ color: "text.secondary", margin: "0 4px" }}
                     >
-                      <Chip label={subtask.date} color="secondary" />
+                      <Chip label={subtask.subtask_date} color="secondary" />
                     </Typography>
                     </Box>
                   </Box>

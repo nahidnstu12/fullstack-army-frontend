@@ -6,10 +6,10 @@ export const subtaskSlice = createSlice({
     subtaskList: [
       {
         id: shortid.generate(),
-        task_title: "subtask1",
-        task_user: 1,
-        task_priority: 1,
-        task_date: "12/8/22",
+        subtask_title: "subtask1",
+        subtask_user: 1,
+        subtask_priority: 1,
+        subtask_date: "12/8/22",
         task_id: 1
       },
     ],

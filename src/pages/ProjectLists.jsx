@@ -11,20 +11,23 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 import { ProjectForm } from "../components/ProjectForm";
+import {  useSelector } from 'react-redux';
 
 export default function ProjectLists() {
+  const {projectlists} = useSelector(state => state.projects)
   return (
     <div className="mx-auto w-9/12">
       <Box className={"flex gap-4"}>
         <Link to={"/"}>Home</Link>
+        <Link to={"/users"}>User</Link>
         <Typography>Project Lists</Typography>
       </Box>
 
       <ProjectForm />
       <Grid container className={"my-5"}>
-        {[...Array(4)].map((_, i) => (
-          <Grid item md={6} key={i} className={"py-4 pr-4"}>
-            <ProjectItem />
+        {projectlists.map((item) => (
+          <Grid item md={6} key={item.id} className={"py-4 pr-4"}>
+            <ProjectItem item={item} />
           </Grid>
         ))}
       </Grid>
@@ -32,7 +35,7 @@ export default function ProjectLists() {
   );
 }
 
-const ProjectItem = () => {
+const ProjectItem = ({item}) => {
   return (
     <Card>
       <CardMedia
@@ -43,16 +46,15 @@ const ProjectItem = () => {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {item.project_title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+         {item.project_description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Link to={`/projects/${1}`}>
-          <Button size="small">Learn More</Button>
+        <Link to={`/projects/${item.id}`}>
+          <Button size="small">See All Details</Button>
         </Link>
       </CardActions>
     </Card>

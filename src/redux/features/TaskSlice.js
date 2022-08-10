@@ -10,6 +10,7 @@ export const taskSlice = createSlice({
         task_user: 1,
         task_priority: 1,
         task_date: "12/8/22",
+        project_id:1
       },
     ],
   },
