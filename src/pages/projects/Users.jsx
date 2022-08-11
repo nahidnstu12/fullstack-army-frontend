@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { UserForm } from '../components/ProjectForm'
+import { UserForm } from '../../components/ProjectForm'
 
 export default function Users() {
     const {userlists} = useSelector(state => state.users)

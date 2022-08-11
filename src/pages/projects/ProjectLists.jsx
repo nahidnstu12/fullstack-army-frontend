@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { ProjectForm } from "../components/ProjectForm";
+import { ProjectForm } from "../../components/ProjectForm";
 import {  useSelector } from 'react-redux';
 
 export default function ProjectLists() {

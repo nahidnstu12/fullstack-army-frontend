@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Project from "./pages/Project";
-import ProjectLists from "./pages/ProjectLists";
-import Users from "./pages/Users";
+import Project from "./pages/projects/Project";
+import ProjectLists from "./pages/projects/ProjectLists";
+import Users from "./pages/projects/Users";
 
 function App() {
   
