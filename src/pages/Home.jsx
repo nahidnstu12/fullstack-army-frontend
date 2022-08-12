@@ -9,6 +9,7 @@ export default function Home() {
         <Link to={"/"}>Home</Link>
         <Link to={"/projects"}>Project Lists</Link>
         <Link to={"/users"}>Users</Link>
+        <Link to={"/mui-designs"}>MUI Designs</Link>
       </Box>
       <Box className='mt-4 p-4 bg-gray-300 mx-auto w-2/3'>
         <Typography variant='h4'  align='center'>This is Project Managenent Assignment</Typography>
