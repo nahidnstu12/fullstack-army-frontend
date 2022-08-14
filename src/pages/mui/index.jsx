@@ -68,10 +68,36 @@ const StyledBox = styled(Box)((props) => ({
 }));
 const StyledPaper = styled(Paper)((props) => ({
   "&.paper": {
-    // width: "3rem",
-    // height: "3rem",
     color: props.color ?? "white",
     background: props.background ?? "white",
+    padding: "1rem",
+    margin: "0 1rem",
+    display: "grid",
+    gap: props.gap ?? "1px",
+    placeItems: props.center ? "center" : "",
+    borderRadius: "12px",
+    flexGrow: 1,
+  },
+}));
+const StyledSMPaper = styled(Paper)((props) => ({
+  "&.paper_sm": {
+    color: props.color ?? "white",
+    background: props.background ?? "white",
+    padding: "1rem",
+    margin: "0 1rem",
+    borderRadius: "12px",
+    alignSelf: "center",
+  },
+}));
+
+const StyledPaperBox = styled(Box)((props) => ({
+  "&.paper_box": {
+    color: props.color ?? "white",
+    background: props.background ?? "white",
+    display: "flex",
+    padding: "0.3rem",
+    borderRadius: "12px",
+    alignItems: "center"
   },
 }));
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -171,29 +197,81 @@ const BodyContainer = () => {
           />
         </FormControl>
       </StyledBox>
+
       <Grid container spacing={2} py={2}>
-        <Grid item xs={12} sm={6} md={4}>
-          <StyledPaper className="paper" background="#6000d4">
-            <AccessAlarmsIcon fontSize="large" />
-            <Typography variant="h6">Earnings</Typography>
+        <Grid item xs={12} sm={6} md={3}>
+          <StyledPaper className="paper" background="#6000d4" center>
+            <AccessAlarmsIcon sx={{ fontSize: "3rem", mt: "0.5rem" }} />
+            <Typography variant="subtitle1" sx={{ py: "0.4rem" }}>
+              Earnings
+            </Typography>
             <Typography variant="h5">120000 $</Typography>
-            <Chip>+ 10% since last month</Chip>
+            <Chip label={"+ 10% since last month"} sx={{ color: "white" }} />
           </StyledPaper>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <StyledPaper className="paper" background="#6000d4">
-            <AccessAlarmsIcon fontSize="large" />
-            <Typography variant="h6">Earnings</Typography>
-            <Typography variant="h5">120000 $</Typography>
-            <Chip>+ 10% since last month</Chip>
+          <StyledPaper className="paper" color="#333" gap={"10px"}>
+            <StyledPaperBox className={"paper_box"} background="#6000d433">
+              <StyledSMPaper className="paper_sm" background="#6000d4">
+                98
+              </StyledSMPaper>
+              <Box>
+                <Typography variant="h6" color={"black"}>
+                  Rank
+                </Typography>
+                <Typography variant="subtitle1" color={"black"}>
+                  In top 20
+                </Typography>
+              </Box>
+            </StyledPaperBox>
+
+            <StyledPaperBox className={"paper_box"} background="#6000d433">
+              <StyledSMPaper className="paper_sm" background="#6000d4">
+                32
+              </StyledSMPaper>
+              <Box>
+                <Typography variant="h6" color={"black"}>
+                  Projeccts
+                </Typography>
+                <Typography variant="subtitle1" color={"black"}>
+                  In this month
+                </Typography>
+                <Box sx={{ display: "flex", gap: "4px" }}>
+                  <Chip label={"mobile app"} sx={{ color: "#6000d4" }} />
+                  <Chip label={"web app"} sx={{ color: "#6000d4" }} />
+                </Box>
+              </Box>
+            </StyledPaperBox>
           </StyledPaper>
         </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <StyledPaper className="paper" background="#6000d4">
-            <AccessAlarmsIcon fontSize="large" />
-            <Typography variant="h6">Earnings</Typography>
-            <Typography variant="h5">120000 $</Typography>
-            <Chip>+ 10% since last month</Chip>
+        <Grid item xs={12} sm={6} md={5}>
+          <Typography sx={{ margin: "0.5rem 1rem" }} variant="h6">
+            Your Projects
+          </Typography>
+          <StyledPaper className="paper" color="#333" gap="10px">
+            <StyledPaperBox className={"paper_box"} >
+              <Avatar alt="name" src="demo.jpg" sx={{ m: "0 .5rem", mr:"1rem" }} />
+              <Box>
+                <Typography variant="h6" color={"black"}>
+                 Loog Design Beaser
+                </Typography>
+                <Typography variant="subtitle1" color={"black"}>
+                 1 day remaining
+                </Typography>
+              </Box>
+            </StyledPaperBox>
+
+            <StyledPaperBox className={"paper_box"} >
+              <Avatar alt="name" src="demo.jpg" sx={{ m: "0 .5rem", mr:"1rem" }} />
+              <Box>
+                <Typography variant="h6" color={"black"}>
+                 Loog Design Beaser
+                </Typography>
+                <Typography variant="subtitle1" color={"black"}>
+                 1 day remaining
+                </Typography>
+              </Box>
+            </StyledPaperBox>
           </StyledPaper>
         </Grid>
       </Grid>
